@@ -23,14 +23,19 @@ def split(data_dir):
     full_dataset = os.listdir(os.path.join(data_dir,"training_and_validation"))
     dataset_size = len(full_dataset)
 
-    train_size = int(0.8 * dataset_size) #test_size = 1-train_size
+    train_size = int(0.7 * dataset_size) #test_size = 1-train_size
+    test_size = int(0.15 * dataset_size) 
+    val_size = int(0.15 * dataset_size) 
     random.shuffle(full_dataset)
 
     #train data
     for filename in full_dataset[:train_size]:
         os.rename(os.path.join(data_dir,"training_and_validation",filename), os.path.join(data_dir,"train",filename))
+    #val data
+    for filename in full_dataset[train_size:train_size+val_size]:
+        os.rename(os.path.join(data_dir,"training_and_validation",filename), os.path.join(data_dir,"val",filename))
     #test data
-    for filename in full_dataset[train_size:]:
+    for filename in full_dataset[train_size+val_size:]:
         os.rename(os.path.join(data_dir,"training_and_validation",filename), os.path.join(data_dir,"test",filename))
 
 
